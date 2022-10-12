@@ -1,7 +1,3 @@
-# The project is final of Chuyen De An Toan Phan Mem subject
-
-## Author: Le Thanh Trung
-
 # Description
 
 Hiện thực giải pháp bảo vệ Webservice/webAPI theo OWASP
