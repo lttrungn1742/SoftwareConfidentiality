@@ -1,0 +1,29 @@
+{
+   "routes": [
+     {
+       "method": "GET",
+       "path": "/transfers/my",
+       "handler": "transfer.getMyTransfers",
+       "config": {
+         "policies": ["global::pass-jwt-user"]
+       }
+     },
+     {
+       "method": "GET",
+       "path": "/transfers/:transferId",
+       "handler": "transfer.getSingle",
+       "config": {
+         "policies": ["global::pass-jwt-user"]
+       }
+     },
+     {
+       "method": "POST",
+       "path": "/transfers",
+       "handler": "transfer.create",
+       "config": {
+         "policies": ["global::pass-jwt-user"]
+       }
+     }
+   ]
+ }
+ 

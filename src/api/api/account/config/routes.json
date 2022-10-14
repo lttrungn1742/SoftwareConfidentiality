@@ -1,0 +1,20 @@
+{
+  "routes": [
+   {
+      "method": "GET",
+      "path": "/accounts/my",
+      "handler": "account.getMyAccounts",
+      "config": {
+        "policies": ["global::pass-jwt-user"]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/accounts/:accountId",
+      "handler": "account.getSingle",
+      "config": {
+        "policies": ["global::pass-jwt-user"]
+      }
+    }
+  ]
+}

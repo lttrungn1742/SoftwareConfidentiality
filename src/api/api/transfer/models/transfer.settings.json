@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transfers",
+  "info": {
+    "name": "transfer",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "sender": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "transfer"
+    },
+    "payee_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50,
+      "minLength": 2
+    },
+    "amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "eur",
+        "gbp"
+      ],
+      "required": true
+    },
+    "reference": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "minLength": 2
+    },
+    "source_account": {
+      "model": "account"
+    },
+    "payee_addr": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100,
+      "minLength": 10
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "failed",
+        "pending",
+        "complete"
+      ],
+      "required": true,
+      "default": "pending"
+    },
+    "method": {
+      "type": "enumeration",
+      "enum": [
+        "normal",
+        "turbo"
+      ],
+      "required": true
+    },
+    "payee_acc_number": {
+      "type": "biginteger",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "income",
+        "expense"
+      ]
+    },
+    "prev_balance": {
+      "type": "decimal",
+      "required": true
+    },
+    "next_balance": {
+      "type": "decimal",
+      "unique": false,
+      "required": true
+    }
+  }
+}

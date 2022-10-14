@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  web:
+    build:
+      dockerfile: build/Dockerfile-local
+      context: src
+    container_name: web
+    volumes:
+      - ./app/src/src:/src/src:rw
+      - ./app/src/content:/src/content:rw
+      - ./app/src/static:/src/static:rw
+    ports:
+      - "8000:80"
+    command: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
