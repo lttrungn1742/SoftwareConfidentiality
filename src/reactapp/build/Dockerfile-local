@@ -4,14 +4,17 @@ RUN apk update && \
     apk add --no-cache nginx supervisor  && mkdir -p /var/cache/nginx/ && \
     chmod 777 -R /var/lib/nginx/tmp
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/default.conf /etc/nginx/conf.d/default.conf
-COPY conf/supervisord.conf /etc/supervisord.conf
-
-COPY src/package.json /src/package.json
 RUN addgroup -g 82 -S www-data ; \
     adduser -u 82 -D -S -G www-data www-data 
+
+COPY src/package.json /src/package.json
 RUN yarn --cwd /src 
+
+COPY conf /conf 
+
+RUN ln -nfs /conf/nginx.conf /etc/nginx/nginx.conf &&\
+    ln -nfs /conf/default.conf /etc/nginx/conf.d/default.conf &&\
+    ln -nfs /conf/supervisord.conf /etc/supervisord.conf
 
 COPY src/public /src/public
 COPY src/src /src/src 

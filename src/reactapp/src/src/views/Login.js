@@ -1,7 +1,8 @@
 import { useSkin } from '@hooks/useSkin'
-import { Link, Redirect } from 'react-router-dom'
+import { handleLogin } from '@store/actions/auth'
+import { useDispatch } from 'react-redux'
 import InputPasswordToggle from '@components/input-password-toggle'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap'
+import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import {useState} from 'react'
 import '@styles/base/pages/page-auth.scss'
 
@@ -9,10 +10,11 @@ const Login = () => {
   const [skin, setSkin] = useSkin()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
-  const handleLogin = (e) => {
+  const login = (e) => {
     e.preventDefault()
     fetch(`http://10.10.10.10/api/login`, {
       method: 'POST', 
@@ -27,7 +29,10 @@ const Login = () => {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log('Success:', data);
+      console.log(data);
+      dispatch(handleLogin(data))
+      window.location.reload()
+
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -45,13 +50,13 @@ const Login = () => {
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
-              Welcome to Vuexy! 👋
+              Welcome to UIS.PTITHCM! 👋
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-            <Form className='auth-login-form mt-2' onSubmit={e => handleLogin(e)}>
+            <Form className='auth-login-form mt-2' onSubmit={e => login(e)}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
-                  Email
+                  Username
                 </Label>
                 <Input type='text' id='login-email' placeholder='username' onChange={e => setUsername(e.target.value)} autoFocus />
               </FormGroup>

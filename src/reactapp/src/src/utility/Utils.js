@@ -64,5 +64,3 @@ export const selectThemeColors = theme => ({
     neutral30: '#ededed' // for input hover border-color
   }
 })
-
-export const END_POINT_API = "http://10.0.0.10"

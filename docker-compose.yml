@@ -14,11 +14,11 @@ services:
     container_name: web
     volumes:
       - ./src/reactapp/src/src:/src/src:rw
+      - ./src/reactapp/conf:/conf:rw 
     command: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
     networks:
         app:
-           ipv4_address: 10.10.10.20
-
+          ipv4_address: 10.10.10.20
   api:
     build: src/api
     container_name: api
@@ -26,4 +26,15 @@ services:
       - ./src/api/src/:/app:rw 
     networks:
         app:
-           ipv4_address: 10.10.10.10
+          ipv4_address: 10.10.10.10
+    env_file:
+      - .env
+    links:
+      - db
+  db:
+    build: src/db
+    container_name: db
+    env_file:
+      - .env
+    networks:
+        app:

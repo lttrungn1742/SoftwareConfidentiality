@@ -13,9 +13,9 @@ def healthcheck():
 @api.route('/login', methods=['POST'])
 @cross_origin()   
 def login():
-    # username, password = request.json['username'], request.json['password']
-    # userFound = db.login(username, password)
-    # if userFound != None:
-    #     return {'data' : True, 'cookie' : token.create_cookie(userFound)}
-    return {'data' : False}
+    username, password = request.json['username'], request.json['password']
+    userFound = db.login(username, password)
+    if userFound != None:
+        return {'isSuccess' : True, 'username': username, 'accessToken' : token.create_cookie(userFound)}
+    return {'isSuccess' : False}
 
