@@ -3,6 +3,7 @@ all:
 	make web
 db:
 	docker-compose up -d db
+	sleep 30
 web:
 	docker-compose up -d 
 q:

@@ -4,7 +4,7 @@ import logging, json
 
 logging.basicConfig(level=logging.INFO, format=f'%(message)s')
 
-con = mysql.connector.connect(host="db", user="root", password=os.getenv('MYSQL_ROOT_PASSWORD'), database='data')
+con = mysql.connector.connect(host=os.getenv('DB_HOST'), user=os.getenv('MYSQL_USER'), password=os.getenv('MYSQL_ROOT_PASSWORD'), database='data')
 cursor = con.cursor()
 
 
@@ -50,10 +50,12 @@ def getSubjects():
       return None
 
 def getStudents():
+  
   try:
       description, rv = execute_query("select * from students")  
-      row_headers=[element[0] for element in description]
+      row_headers=[element[0] for element in description]      
       response = json.dumps([dict(zip(row_headers,result)) for result in rv])
+      logging.info(response)
       return response
   except Exception as err:
       logging.info(err)
