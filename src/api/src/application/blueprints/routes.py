@@ -9,7 +9,6 @@ CORS(api)
 def healthcheck():
     return 'I am ok'
 
- 
 @api.route('/login', methods=['POST'])
 @cross_origin()   
 def login():
@@ -19,3 +18,12 @@ def login():
         return {'isSuccess' : True, 'username': username, 'accessToken' : token.create_cookie(userFound)}
     return {'isSuccess' : False}
 
+@api.route('/getSubject', methods=['GET'])
+@cross_origin()
+def getSubjects():
+    return db.getSubjects()
+
+@api.route('/getStudents', methods=['GET'])
+@cross_origin()
+def getStudents():
+    return db.getStudents()
