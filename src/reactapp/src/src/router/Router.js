@@ -67,16 +67,17 @@ const Router = () => {
       resource = route.meta.resource ? route.meta.resource : null
     }
 
-    if (
+    /*if (
       !isUserLoggedIn() 
     ) {
 
       return <Redirect to='/login' />
-    } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
+    } else*/ if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
      
       return <Redirect to='/' />
 
-    } else {
+    } 
+    else {
       // ** If none of the above render component
       return <route.component {...props} />
     }
@@ -85,10 +86,7 @@ const Router = () => {
   // ** Return Route to Render
   const ResolveRoutes = () => {
     return Object.keys(Layouts).map((layout, index) => {
-
       const LayoutTag = Layouts[layout]
-
-
       const { LayoutRoutes, LayoutPaths } = LayoutRoutesAndPaths(layout)
 
       const routerProps = {}
@@ -139,6 +137,7 @@ const Router = () => {
                               : {})}
                           >
                             {/* <route.component {...props} /> */}
+                            
                             <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
                         </Suspense>

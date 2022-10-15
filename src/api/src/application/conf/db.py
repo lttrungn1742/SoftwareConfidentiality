@@ -28,16 +28,24 @@ def execute_query(query):
     except InterfaceError as err:
         logging.debug(err)
         con.close()
-        con.reconnect(attempts=1, delay=0)
-        return execute_query(query)
-    except:
-        con.reconnect(attempts=1, delay=0)
-        return execute_query(query)
+        # con.reconnect(attempts=1, delay=0)
+        # return execute_query(query)
+    except Exception as err:
+        logging.debug(err)
+        pass
 
 def login(username, password):
-  sql = f"select username from users where username='{username}' and passwd='{password}'"
+  query = f"select username from users where username='{username}' and passwd='{password}'"
   
-  return [row[0] for row in execute_query(sql)][0]
+  result = execute_query_fetchone(query)[0]
+  logging.debug(" The username is logged - %s"% result)
+  
+  return result
 
+def getSubjects():
+  query = "select * from subjects"
+  result = execute_query(query)
+  logging.debug(result)
   
+getSubjects()
  
