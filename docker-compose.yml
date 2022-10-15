@@ -1,14 +1,29 @@
 version: '3.7'
+networks:
+  app: 
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
+
 services:
   web:
     build:
       dockerfile: build/Dockerfile-local
-      context: src
+      context: src/reactapp
     container_name: web
     volumes:
-      - ./app/src/src:/src/src:rw
-      - ./app/src/content:/src/content:rw
-      - ./app/src/static:/src/static:rw
-    ports:
-      - "8000:80"
+      - ./src/reactapp/src/src:/src/src:rw
     command: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+    networks:
+        app:
+           ipv4_address: 10.10.10.20
+
+  api:
+    build: src/api
+    container_name: api
+    volumes:
+      - ./src/api/src/:/app:rw 
+    networks:
+        app:
+           ipv4_address: 10.10.10.10
