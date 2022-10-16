@@ -27,3 +27,9 @@ def getSubjects():
 @cross_origin()
 def getStudents():
     return db.getStudents()
+
+@api.route('/getProfile', methods=['POST'])
+@cross_origin()
+def getProfile():
+    username = request.json['username']
+    return db.getProfile(username)

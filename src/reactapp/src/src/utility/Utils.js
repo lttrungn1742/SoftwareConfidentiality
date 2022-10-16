@@ -45,6 +45,8 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
 
 export const isUserLoggedIn = () => localStorage.getItem('userData')
 export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
+export const getToken = JSON.parse(localStorage.getItem('userData')).accessToken
+export const getUsername = JSON.parse(localStorage.getItem('userData')).username
 
 export const getHomeRouteForLoggedInUser = userRole => {
   if (userRole === 'admin') return '/'
