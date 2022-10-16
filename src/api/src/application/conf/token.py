@@ -1,3 +1,4 @@
+import logging
 import jwt
 from datetime import datetime
 
@@ -10,8 +11,11 @@ def create_token(user):
 def verify_token(token):
     try:
         token = jwt.decode(token, secretKey, algorithms="HS256")
+        logging.info(token)        
         if datetime.now().timestamp() > token['expire']:
+            logging.info('the token is expired')
             return None
         return token
-    except jwt.exceptions.InvalidSignatureError:
+    except jwt.exceptions.InvalidSignatureError as err:
+        logging.info(err)
         return None

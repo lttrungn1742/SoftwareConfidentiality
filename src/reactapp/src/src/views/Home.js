@@ -1,93 +1,10 @@
-// import { Card, CardHeader, CardBody, CardTitle, CardText, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
-
-// import React, { useEffect } from 'react';
-// import endpoint from './endpoint'
-// import InputPasswordToggle from '@components/input-password-toggle'
-// import '@styles/base/pages/page-auth.scss'
-
-// const Home = () => {
-//   const login = (e) => {
-//     e.preventDefault()  
-//     fetch(`${endpoint}/api/login`, {
-//       method: 'POST', 
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Access-Control-Allow-Origin': '*'
-//       },
-//       body: JSON.stringify({
-//         'username': username,
-//         'password': password
-//       }),
-//     })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       if (data.isSuccess){
-//         dispatch(handleLogin(data))
-//         window.location.reload()
-//       }
-//     })
-//     .catch((error) => {
-//       console.error('Error:', error);
-//     });
-//   }
-
-//   const [person, setPerson] = React.useState({});
-//   const fetchGet = async () => {
-//     const response = await fetch(
-//         `${endpoint}/api/getProfile`, {
-//           method: 'POST', 
-//           headers: {
-//             'Content-Type': 'application/json',
-//             'Access-Control-Allow-Origin': '*',
-//             'Authorization': `Bearer ${JSON.parse(localStorage.getItem('userData')).accessToken}`
-//           },
-//           body: JSON.stringify({
-//             'username': JSON.parse(localStorage.getItem('userData')).username
-//           }),
-//         }
-        
-//       );
-//      const data = await response.json();
-//      console.log(data[0])
-//      setPerson(data[0]);
-//     };
-
-//   useEffect(() => {
-//       fetchGet()
-//   }, []);
-
-//   return (
-//     <div>
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Thong Tin Ca Nhan</CardTitle>
-//         </CardHeader>
-//         <CardBody>
-//           <CardText>
-//             <Form>
-
-//             </Form>
-//           </CardText>
-         
-//         </CardBody>
-//       </Card>
-
-//     </div>
-//   )
-// }
-
-// export default Home
-
-
 import { useSkin } from '@hooks/useSkin'
-import { handleLogin } from '@store/actions/auth'
 import { useDispatch } from 'react-redux'
-import InputPasswordToggle from '@components/input-password-toggle'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import { Row, Col, CardTitle, Form, Label, Input, Button } from 'reactstrap'
 import React, {useState, useEffect} from 'react'
 import '@styles/base/pages/page-auth.scss'
 import endpoint from './endpoint'
-
+import { handleLogout } from '@store/actions/auth'
 
 const Home = () => {
   const [skin, setSkin] = useSkin()
@@ -97,7 +14,6 @@ const Home = () => {
   const [indentity, setIndentity] = useState('')
   const [nPhone, setNPhone] = useState('')
   const dispatch = useDispatch()
-
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
   source = require(`@src/assets/images/pages/${illustration}`).default
@@ -120,6 +36,7 @@ const Home = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data)
+      
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -128,27 +45,31 @@ const Home = () => {
 
   const [person, setPerson] = React.useState({});
   const fetchGet = async () => {
-    const response = await fetch(
-        `${endpoint}/api/getProfile`, {
-          method: 'POST', 
+     await fetch(`${endpoint}/api/getProfile`, {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Authorization': JSON.parse(localStorage.getItem('userData')).accessToken
-          },
-          body: JSON.stringify({
-            'username': JSON.parse(localStorage.getItem('userData')).username
-          }),
-        }
-        
-      );
-      const data = await response.json();
-      console.log(data[0])
-      setPerson(data[0]);
-      setName(data[0].name);
-      setAddress(data[0].address);
-      setNPhone(data[0].numberPhone);
-      setIndentity(data[0].identiyCard);
+          }
+        })
+        .then((response) => response.json())
+        .then((data) => {
+     
+            console.log(data)
+            setPerson(data[0]);
+            setName(data[0].name);
+            setAddress(data[0].address);
+            setNPhone(data[0].numberPhone);
+            setIndentity(data[0].identiyCard);
+      
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          dispatch(handleLogout());
+          window.location.reload()
+        });
+      
+      
     };
 
   useEffect(() => {
@@ -184,8 +105,6 @@ const Home = () => {
                   </Label>
                 </Col>
                 <Col>
-                  {/* <Input type='text'   value={person.name}  onChange={e => setName(e.target.value)} autoFocus/>
-                   */}
                       <Input type='text' id='login-email' value={name} placeholder='username' onChange={e => setName(e.target.value)} autoFocus />
                 </Col>
               </Row>

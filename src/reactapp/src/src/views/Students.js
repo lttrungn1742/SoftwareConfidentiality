@@ -89,7 +89,13 @@ const SecondPage = () => {
 
   const fetchGet = async () => {
     const response = await fetch(
-        `${endpoint}/api/getStudents`
+        `${endpoint}/api/getStudents`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': JSON.parse(localStorage.getItem('userData')).accessToken
+          }
+        }
       );
      const data = await response.json();
      console.log(data)

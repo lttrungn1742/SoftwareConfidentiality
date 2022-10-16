@@ -9,7 +9,7 @@ import { useRouterTransition } from '@hooks/useRouterTransition'
 
 import LayoutWrapper from '@layouts/components/layout-wrapper'
 
-import { BrowserRouter as AppRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as AppRouter, Route, Switch, Redirect, useLocation } from 'react-router-dom'
 
 import { DefaultRoute, Routes } from './routes'
 
@@ -67,15 +67,12 @@ const Router = () => {
       resource = route.meta.resource ? route.meta.resource : null
     }
 
-    /*if (
-      !isUserLoggedIn() 
-    ) {
+ 
+    if ( !isUserLoggedIn() && useLocation().pathname != '/login') {
 
       return <Redirect to='/login' />
-    } else*/ if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
-     
+    } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       return <Redirect to='/' />
-
     } 
     else {
       // ** If none of the above render component
