@@ -1,4 +1,6 @@
-from flask import Blueprint, request
+import json
+import logging
+from flask import Blueprint, request, jsonify
 from application.conf import token, db
 from flask_cors import CORS, cross_origin
 
@@ -15,7 +17,7 @@ def login():
     username, password = request.json['username'], request.json['password']
     userFound = db.login(username, password)
     if userFound != None:
-        return {'isSuccess' : True, 'username': username, 'accessToken' : token.create_cookie(userFound)}
+        return {'isSuccess' : True, 'username': username, 'accessToken' : token.create_token(userFound)}
     return {'isSuccess' : False}
 
 @api.route('/getSubject', methods=['GET'])
@@ -33,3 +35,20 @@ def getStudents():
 def getProfile():
     username = request.json['username']
     return db.getProfile(username)
+
+@api.route('/updateProfile', methods=['POST'])
+@cross_origin()
+def updateProfile():
+    accessToken = token.verify_token(request.headers['Authorization'])
+    if accessToken == None:
+        return jsonify({'error': 'Bad Request'}), 302
+    
+    id = accessToken['user']
+
+    name = request.json['name']
+    address = request.json['address']
+    indentity = request.json['indentity']
+    numberPhone = request.json['numberPhone']
+    response = db.updateProfile(id, name, address, indentity, numberPhone)
+    
+    return json.dumps({'response' : response})

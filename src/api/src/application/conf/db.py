@@ -70,7 +70,7 @@ def getStudents():
       description, rv = execute_query(query)  
       
       response = toJson([element[0] for element in description]  , rv)
-      logging.info(response)
+
       return response
   except Exception as err:
       logging.info(err)
@@ -102,4 +102,24 @@ def getProfile(username):
 
     return response
 
+def updateProfile(id, name, address, indentity, numberPhone):
+    try:
+        sql = """   UPDATE students 
+                    SET 
+                        address = %s,
+                        name = %s,
+                        identiyCard = %s,
+                        numberPhone = %s
+                    WHERE id = %s"""
 
+        cursor.execute(sql, (address, name, indentity, numberPhone, id))
+
+        con.commit()
+        return "Success"
+    except mysql.connector.errors.DataError as err:
+        logging.info(err)
+        return str(err)
+    
+    except Exception as err:
+        logging.info(err)
+        return str(err)
