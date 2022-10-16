@@ -1,3 +1,5 @@
+DROP DATABASE data;
+
 CREATE DATABASE data;
 
 
