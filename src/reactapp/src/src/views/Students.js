@@ -17,6 +17,45 @@ const columns = [
     name: "Name",
     selector: (row) => row.name,
     sortable: true,
+    reorder: true
+  },
+  {
+    id: 3,
+    name: "BirthDate",
+    selector: (row) => row.birthd,
+    sortable: true,
+    right: true,
+    reorder: true
+  },
+  {
+    id: 4,
+    name: "Class's ID",
+    selector: (row) => row.idClass,
+    sortable: true,
+    right: true,
+    reorder: true
+  },
+  {
+    id: 5,
+    name: "Class's Name",
+    selector: (row) => row.nameClass,
+    sortable: true,
+    right: true,
+    reorder: true
+  },
+  {
+    id: 6,
+    name: "Faculty's ID",
+    selector: (row) => row.idFaculty,
+    sortable: true,
+    right: true,
+    reorder: true
+  },
+  {
+    id: 7,
+    name: "Faculty's Name",
+    selector: (row) => row.nameFaculty,
+    sortable: true,
     right: true,
     reorder: true
   }
@@ -50,7 +89,7 @@ const SecondPage = () => {
 
   const fetchGet = async () => {
     const response = await fetch(
-        `${endpoint}/api/getSubject`, {
+        `${endpoint}/api/getStudents`, {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',

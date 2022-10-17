@@ -1,12 +1,21 @@
+import logging
 import jwt
+from datetime import datetime
 
 secretKey = "SECRET_KEY"
 
-def create_cookie(user):
-    return  jwt.encode({"user": user}, secretKey, algorithm="HS256")
+def create_token(user):
+    expire = datetime.now().timestamp() + 1800
+    return  jwt.encode({"user": user, "expire": expire}, secretKey, algorithm="HS256")
 
-def verify_cookide(token):
+def verify_token(token):
     try:
-        return jwt.decode(token, secretKey, algorithms="HS256")
-    except jwt.exceptions.InvalidSignatureError:
+        token = jwt.decode(token, secretKey, algorithms="HS256")
+        logging.info(token)        
+        if datetime.now().timestamp() > token['expire']:
+            logging.info('the token is expired')
+            return None
+        return token
+    except jwt.exceptions.InvalidSignatureError as err:
+        logging.info(err)
         return None

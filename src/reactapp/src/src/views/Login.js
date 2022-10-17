@@ -5,6 +5,7 @@ import InputPasswordToggle from '@components/input-password-toggle'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import {useState} from 'react'
 import '@styles/base/pages/page-auth.scss'
+import endpoint from './endpoint'
 
 const Login = () => {
   const [skin, setSkin] = useSkin()
@@ -16,7 +17,7 @@ const Login = () => {
 
   const login = (e) => {
     e.preventDefault()  
-    fetch(`http://10.10.10.10/api/login`, {
+    fetch(`${endpoint}/api/login`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
@@ -29,10 +30,10 @@ const Login = () => {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      dispatch(handleLogin(data))
-      window.location.reload()
-
+      if (data.isSuccess){
+        dispatch(handleLogin(data))
+        window.location.reload()
+      }
     })
     .catch((error) => {
       console.error('Error:', error);

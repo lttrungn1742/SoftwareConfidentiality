@@ -1,17 +1,24 @@
 import mysql.connector, os
 from mysql.connector.errors import InterfaceError
 import logging, json
+from hashlib import sha512
 
 logging.basicConfig(level=logging.INFO, format=f'%(message)s')
 
-con = mysql.connector.connect(host="db", user="root", password=os.getenv('MYSQL_ROOT_PASSWORD'), database='data')
+con = mysql.connector.connect(  
+                                host=os.getenv('DB_HOST'), 
+                                user=os.getenv('MYSQL_USER'), 
+                                password=os.getenv('MYSQL_ROOT_PASSWORD'), 
+                                database='data'
+                                )
 cursor = con.cursor()
 
+toJson = lambda headers, data: json.dumps([dict(zip(headers, element if element != None else "")) for element in data])
 
-def execute_query_fetchone(query):
+def execute_query_fetchone(query, val=()):
     try:
-        cursor.execute(query)
-        return cursor.fetchone()
+        cursor.execute(query, val)
+        return cursor.description, cursor.fetchone()
     except InterfaceError as err:
         logging.debug(err)
         con.close()
@@ -21,9 +28,9 @@ def execute_query_fetchone(query):
         logging.debug(err)
         return [None]
        
-def execute_query(query):
+def execute_query(query, val=()):
     try:
-        cursor.execute(query)
+        cursor.execute(query, val)
         return cursor.description, cursor.fetchall()
     except InterfaceError as err:
         logging.debug(err)
@@ -35,26 +42,84 @@ def execute_query(query):
 
 
 def login(username, password):
-  result = execute_query_fetchone(f"select username from users where username='{username}' and passwd='{password}'")[0]
-  logging.info(" The username is logged - %s"% result)
-  return result
+  result = execute_query_fetchone(f"select id from students where id=%s and password=%s", (username, sha512(password.encode()).hexdigest()))
+  
+  logging.info(f" The username is logged - {result}")
+  return None if result == None else result[1][0]
   
 def getSubjects():
   try:
       description, rv = execute_query("select * from subjects")  
-      row_headers=[element[0] for element in description]
-      response = json.dumps([dict(zip(row_headers,result)) for result in rv])
+      response = toJson([element[0] for element in description]  , rv)
+
       return response
   except Exception as err:
       logging.info(err)
       return None
 
 def getStudents():
+  
   try:
-      description, rv = execute_query("select * from students")  
-      row_headers=[element[0] for element in description]
-      response = json.dumps([dict(zip(row_headers,result)) for result in rv])
+      query = """select students.id, 
+                    students.name, 
+                    DATE_FORMAT(birthDate , '%d/%m/%Y') as birthd,
+                    idClass, class.name as nameClass, idFaculty, 
+                    faculty.name as nameFaculty 
+                from students, faculty, class 
+                where class.id=idClass and faculty.id=idFaculty"""
+      description, rv = execute_query(query)  
+      
+      response = toJson([element[0] for element in description]  , rv)
+
       return response
   except Exception as err:
       logging.info(err)
       return None
+
+def getProfile(username):
+    query = """select students.id, 
+                    students.name, 
+                    DATE_FORMAT(birthDate , '%d/%m/%Y') as birthd,
+                    idClass, 
+                    class.name as nameClass, 
+                    idFaculty, 
+                    faculty.name as nameFaculty,
+                    numberPhone,
+                    address,
+                    identiyCard
+                from 
+                    students, 
+                    faculty, 
+                    class 
+                where 
+                    class.id=idClass and 
+                    faculty.id=idFaculty and
+                    students.id=%s
+                limit 1"""
+    description, rv  = execute_query_fetchone(query, (username, ))
+    
+    response = toJson([element[0] for element in description]  , [rv])
+
+    return response
+
+def updateProfile(id, name, address, indentity, numberPhone):
+    try:
+        sql = """   UPDATE students 
+                    SET 
+                        address = %s,
+                        name = %s,
+                        identiyCard = %s,
+                        numberPhone = %s
+                    WHERE id = %s"""
+
+        cursor.execute(sql, (address, name, indentity, numberPhone, id))
+
+        con.commit()
+        return "Success"
+    except mysql.connector.errors.DataError as err:
+        logging.info(err)
+        return str(err)
+    
+    except Exception as err:
+        logging.info(err)
+        return str(err)
