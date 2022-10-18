@@ -1,4 +1,3 @@
-DROP DATABASE data;
 
 CREATE DATABASE data;
 
@@ -45,12 +44,12 @@ CREATE TABLE students(
     FOREIGN KEY (idFaculty) REFERENCES faculty(id)
 );
 
--- CREATE TABLE academy(
---     id VARCHAR(15),
---     idStudent VARCHAR(15),
---     idSubject VARCHAR(15),
---     time NVARCHAR(12),
---     FOREIGN KEY (idStudent) REFERENCES students(id),
---     FOREIGN KEY (idSubject) REFERENCES subjects(id)
--- );
+CREATE TABLE academy(
+    idStudent VARCHAR(15),
+    idSubject VARCHAR(15),
+    time NVARCHAR(12),
+    score FLOAT,
+    FOREIGN KEY (idStudent) REFERENCES students(id),
+    FOREIGN KEY (idSubject) REFERENCES subjects(id)
+);
 

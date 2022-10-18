@@ -2,6 +2,7 @@ import mysql.connector, os
 from mysql.connector.errors import InterfaceError
 import logging, json
 from hashlib import sha512
+from flask import escape
 
 logging.basicConfig(level=logging.INFO, format=f'%(message)s')
 
@@ -13,7 +14,9 @@ con = mysql.connector.connect(
                                 )
 cursor = con.cursor()
 
-toJson = lambda headers, data: json.dumps([dict(zip(headers, element if element != None else "")) for element in data])
+sanitize_row = lambda row: (escape(element) for element in row)
+toJson = lambda headers, data: json.dumps([dict(zip(headers, sanitize_row(element) if element != None else "")) for element in data])
+
 
 def execute_query_fetchone(query, val=()):
     try:
@@ -51,14 +54,12 @@ def getSubjects():
   try:
       description, rv = execute_query("select * from subjects")  
       response = toJson([element[0] for element in description]  , rv)
-
       return response
   except Exception as err:
       logging.info(err)
       return None
 
 def getStudents():
-  
   try:
       query = """select students.id, 
                     students.name, 
@@ -68,6 +69,28 @@ def getStudents():
                 from students, faculty, class 
                 where class.id=idClass and faculty.id=idFaculty"""
       description, rv = execute_query(query)  
+      
+      response = toJson([element[0] for element in description]  , rv)
+
+      return response
+  except Exception as err:
+      logging.info(err)
+      return None
+
+def getAcademy(idStudent):
+  try:
+      query = """select idStudent, 
+                students.name as nameStudent,
+                idSubject,
+                subjects.name as nameSubject,
+                time,
+                score
+                from academy, students, subjects
+                where 
+                    academy.idStudent=%s and
+                    students.id=academy.idStudent and
+                    subjects.id=academy.idSubject"""
+      description, rv = execute_query(query, (idStudent, ))  
       
       response = toJson([element[0] for element in description]  , rv)
 

@@ -18,5 +18,11 @@ export default [
     title: 'Students',
     icon: <Mail size={20} />,
     navLink: '/students'
+  },
+  {
+    id: 'academy',
+    title: 'Academy',
+    icon: <Mail size={20} />,
+    navLink: '/academy'
   }
 ]
