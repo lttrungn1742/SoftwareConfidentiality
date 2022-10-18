@@ -19,6 +19,8 @@ services:
     networks:
         app:
           ipv4_address: 10.10.10.20
+    ports:
+      - 80:80
   api:
     build: src/api
     container_name: api
@@ -27,6 +29,8 @@ services:
     networks:
         app:
           ipv4_address: 10.10.10.10
+    ports:
+      - 8080:80
     env_file:
       - .env
     links:
@@ -41,3 +45,5 @@ services:
     networks:
         app:
           ipv4_address: 10.10.10.5
+    ports:
+      - 3306:3306    

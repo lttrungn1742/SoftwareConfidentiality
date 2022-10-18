@@ -14,8 +14,8 @@ def verify_token(token):
         logging.info(token)        
         if datetime.now().timestamp() > token['expire']:
             logging.info('the token is expired')
-            return None
-        return token
+            return "Expired", None
+        return "Pass", token
     except jwt.exceptions.InvalidSignatureError as err:
         logging.info(err)
-        return None
+        return "Invalid", None

@@ -1,10 +1,8 @@
 import mysql.connector
 
 # con = mysql.connector.connect(  host="dast-db.ccmgacqdchfg.ap-southeast-1.rds.amazonaws.com", user="admin", password="DASTadmin", database='data')
-con = mysql.connector.connect(  host="10.10.10.5", user="root",  password="root",  database='data')
+con = mysql.connector.connect(host="localhost", user="root",  password="root",  database='data')
 cursor = con.cursor()
-
-
 
 cursor.execute("delete from students", ())
 con.commit()
@@ -18,6 +16,9 @@ con.commit()
 cursor.execute("delete from subjects", ())
 con.commit()
 
+cursor.execute("delete from academy", ())
+con.commit()
+
 sql = """INSERT INTO subjects VALUES
 ('INT1319','Hệ điều hành'),
 ('INT14107','Kiểm thử xâm nhập'),
@@ -29,11 +30,6 @@ cursor.execute(sql, ())
 
 con.commit()
 print(cursor.rowcount, "record inserted.")
-# sql = """INSERT INTO users VALUES
-# (1,'admin','c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec')"""
-# cursor.execute(sql, ())
-
-# con.commit()
 
 sql = """INSERT INTO class VALUES
 ('D18CQAT01-N','ĐHCQ - Ngành An toàn thông tin - 2018-1'),
@@ -98,3 +94,28 @@ cursor.execute(sql, ())
 
 con.commit()
 print(cursor.rowcount, "record inserted.")
+
+sql = """INSERT INTO academy VALUES
+('N18DCAT097','INT1319','HK1-2020',5),
+('N18DCAT097','INT14107','HK2-2022',7),
+('N18DCAT097','INT14102','HK1-2022',5),
+('N18DCAT097','INT1483','HK1-2022',5),
+('N18DCAT097','INT1342','HK1-2022',5),
+('N18DCAT057','INT1319','HK1-2020',5),
+('N18DCAT057','INT14107','HK2-2022',7),
+('N18DCAT057','INT14102','HK1-2022',10),
+('N18DCAT057','INT1483','HK1-2022',10),
+('N18DCAT057','INT1342','HK1-2022',10)"""
+cursor.execute(sql, ())
+
+con.commit()
+print(cursor.rowcount, "record inserted.")
+
+
+"""
+('INT1319','Hệ điều hành'),
+('INT14107','Kiểm thử xâm nhập'),
+('INT14102','Phát triển ứng dụng cho các thiết bị di động'),
+('INT1483','An toàn mạng nâng cao'),
+('INT1342','Phân tích và thiết kế hệ thống thông tin'),
+('INT1482','An toàn mạng')"""

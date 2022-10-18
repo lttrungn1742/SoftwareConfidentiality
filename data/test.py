@@ -1,3 +1,7 @@
-from datetime import datetime
+s = "<img src=trung onerror=alert(1) />"
 
-print(datetime.now().timestamp() + 1800)
+
+from flask import escape
+
+
+print(escape(s))
