@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Backend API 
 on:
   push:
     branches: [ "master" ]
