@@ -11,17 +11,13 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    
-
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 14
       uses: actions/setup-node@v3
       with:
         node-version: 14
-        cache: 'npm'
+        cache: 'yarn'
         cache-dependency-path: src/reactapp/src/package-lock.json
     - run: ls -al
