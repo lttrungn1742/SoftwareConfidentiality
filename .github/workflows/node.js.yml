@@ -13,7 +13,9 @@ jobs:
         working-directory: 'src/reactapp/src'
     steps:
     - uses: actions/checkout@v3
-    - run: |
-      yarn
-      yarn build
-      ls -alh build
+    - name: Build dependencies
+      run: yarn
+    - name: Build html
+      run: yarn build
+    - name: Check source
+      run: ls -alh build
