@@ -19,5 +19,5 @@ jobs:
       with:
         node-version: 14
         cache: 'yarn'
-        cache-dependency-path: src/reactapp/src/package-lock.json
+        cache-dependency-path: "${GITHUB_WORKSPACE}/src/reactapp/src/package-lock.json"
     - run: ls -al
