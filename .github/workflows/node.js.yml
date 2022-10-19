@@ -23,4 +23,5 @@ jobs:
       with:
         node-version: 14
         cache: 'npm'
+        cache-dependency-path: src/reactapp/src/package-lock.json
     - run: ls -al
