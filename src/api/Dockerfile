@@ -16,6 +16,7 @@ RUN mkdir -p /app
 ENV DB_HOST=dast-db.ccmgacqdchfg.ap-southeast-1.rds.amazonaws.com
 ENV MYSQL_ROOT_PASSWORD=DASTadmin
 ENV MYSQL_USER=admin
+ENV DEBUG=False
 
 # Switch working environment
 WORKDIR /app

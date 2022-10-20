@@ -1,7 +1,4 @@
-s = "<img src=trung onerror=alert(1) />"
+import os
 
 
-from flask import escape
-
-
-print(escape(s))
+print(os.urandom(50).hex())

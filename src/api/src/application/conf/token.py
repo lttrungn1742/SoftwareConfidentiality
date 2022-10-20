@@ -1,8 +1,7 @@
-import logging
-import jwt
+import logging, jwt, os
 from datetime import datetime
 
-secretKey = "SECRET_KEY"
+secretKey = os.urandom(50).hex()
 
 def create_token(user):
     expire = datetime.now().timestamp() + 1800
