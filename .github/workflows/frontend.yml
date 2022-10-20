@@ -22,7 +22,6 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::128294669461:role/GithubAction
         aws-region: ap-southeast-1
-        role-session-name: trung-cloud-aws
     - name: Set up Node.js 14
       uses: actions/setup-node@v1
       with:
