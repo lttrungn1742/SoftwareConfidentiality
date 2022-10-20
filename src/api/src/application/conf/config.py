@@ -1,7 +1,7 @@
-
+import os
 
 class Config(object):
-    SECRET_KEY = "asasasasa"
+    SECRET_KEY = os.urandom(50).hex()
 
 class ProductionConfig(Config):
     pass
