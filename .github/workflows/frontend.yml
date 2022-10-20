@@ -29,6 +29,6 @@ jobs:
     - name: Check source
       run: ls -alh build
     - name: S3 sync
-      run: aws s3 sync --delete build s3://lttrung-dast-bucket/public
+      run: aws s3 ls
     - name: Clean cache
       run: aws cloudfront  create-invalidation --distribution-id E21U7PULRELFOQ --paths "/*"
