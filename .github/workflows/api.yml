@@ -1,9 +1,11 @@
 name: Backend API 
 on:
-  push:
-    branches: [ "master" ]
+  # push:
+  #   branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  schedule:
+    - cron: '0 17 * * 0'
 
 permissions:
  id-token: write
