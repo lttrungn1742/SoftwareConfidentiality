@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: install-aws-cli-action
-      uses: unfor19/install-aws-cli-action@v1.0.3
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: arn:aws:iam::128294669461:role/GithubAction
         aws-region: ap-southeast-1
