@@ -15,5 +15,6 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::128294669461:role/GithubAction
         aws-region: ap-southeast-1
+        role-session-name: trung-cloud-aws
     - name: Deployment
       run: aws ssm send-command --document-name "deploy-api" --document-version "\$LATEST" --targets '[{"Key":"InstanceIds","Values":["i-0313a365b5195670e"]}]' --timeout-seconds 600 --max-concurrency "50" --max-errors "0"
