@@ -1,15 +1,5 @@
-
 CREATE DATABASE data;
-
-
 USE data;
-
--- CREATE TABLE users(
---     id INT AUTO_INCREMENT, 
---     username VARCHAR(32), 
---     passwd VARCHAR(128),
---     PRIMARY KEY(id)
--- );
 
 CREATE TABLE faculty(
     id VARCHAR(15),

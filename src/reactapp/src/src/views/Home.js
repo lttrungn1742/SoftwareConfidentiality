@@ -5,6 +5,7 @@ import React, {useState, useEffect} from 'react'
 import '@styles/base/pages/page-auth.scss'
 import endpoint from './endpoint'
 import { handleLogout } from '@store/actions/auth'
+import {  Redirect } from 'react-router-dom'
 
 const Home = () => {
   const [skin, setSkin] = useSkin()
@@ -52,7 +53,10 @@ const Home = () => {
             'Authorization': JSON.parse(localStorage.getItem('userData')).accessToken
           }
         })
-        .then((response) => response.json())
+        .then((response) => {
+          console.log(response)
+          return response.json()
+        })
         .then((data) => {
      
             console.log(data)
@@ -65,8 +69,8 @@ const Home = () => {
         })
         .catch((error) => {
           console.error('Error:', error);
-          // dispatch(handleLogout());
-          // window.location.reload()
+          dispatch(handleLogout());
+          window.location.href = '/'
         });
       
       

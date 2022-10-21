@@ -103,7 +103,7 @@ const SecondPage = () => {
      console.log(data)
      if ('error' in data){
         dispatch(handleLogout())
-        window.location.reload()
+        window.location.href = '/'
     }
     else {
       setRows(data);
