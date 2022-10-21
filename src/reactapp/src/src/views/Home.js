@@ -65,8 +65,8 @@ const Home = () => {
         })
         .catch((error) => {
           console.error('Error:', error);
-          dispatch(handleLogout());
-          window.location.reload()
+          // dispatch(handleLogout());
+          // window.location.reload()
         });
       
       
