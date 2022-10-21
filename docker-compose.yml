@@ -21,6 +21,19 @@ services:
           ipv4_address: 10.10.10.20
     ports:
       - 80:80
+  stg:
+    build:
+      dockerfile: build/Dockerfile-stg
+      context: src/reactapp
+    container_name: stg
+    volumes:
+      - ./src/reactapp/src/src:/src/src:rw
+      - ./src/reactapp/conf:/conf:rw 
+    command: "/usr/sbin/nginx -c /etc/nginx/nginx.conf"
+    networks:
+        app:
+    ports:
+      - 8888:80
   api:
     build: src/api
     container_name: api

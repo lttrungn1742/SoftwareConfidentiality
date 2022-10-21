@@ -6,11 +6,14 @@ import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } 
 import {useState} from 'react'
 import '@styles/base/pages/page-auth.scss'
 import endpoint from './endpoint'
+import { Redirect, Route, useNavigate } from 'react-router-dom'
+import { isUserLoggedIn } from '@utils'
 
 const Login = () => {
   const [skin, setSkin] = useSkin()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  // const navigate = useNavigate();
   const dispatch = useDispatch()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
@@ -31,7 +34,7 @@ const Login = () => {
     .then((data) => {
       if (data.isSuccess){
         dispatch(handleLogin(data))
-        window.location.reload()
+        window.location.href = '/'
       }
     })
     .catch((error) => {
