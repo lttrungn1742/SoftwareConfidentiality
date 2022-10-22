@@ -69,7 +69,7 @@ const Home = () => {
         })
         .catch((error) => {
           console.error('Error:', error);
-          dispatch(handleLogout());
+          // dispatch(handleLogout());
           // window.location.href = '/'
         });
       
