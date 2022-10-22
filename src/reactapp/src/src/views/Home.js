@@ -105,7 +105,7 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Ho Ten
+                    Name
                   </Label>
                 </Col>
                 <Col>
@@ -116,7 +116,7 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Ma Lop
+                    Class's ID
                   </Label>
                 </Col>
                 <Col>
@@ -127,7 +127,7 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Ten Lop
+                    Class's Name
                   </Label>
                 </Col>
                 <Col>
@@ -138,7 +138,7 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Ma Khoa
+                  Faculty's ID
                   </Label>
                 </Col>
                 <Col>
@@ -149,7 +149,7 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Ten Khoa
+                  Faculty's Name
                   </Label>
                 </Col>
                 <Col>
@@ -160,7 +160,7 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Ngay Sinh
+                    Birth Date
                   </Label>
                 </Col>
                 <Col>
@@ -171,48 +171,41 @@ const Home = () => {
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    So Dien Thoai
+                    Number Phone
                   </Label>
                 </Col>
                 <Col>
                   <Input type='text'   value={nPhone} onChange={e => setNPhone(e.target.value)} />
                 </Col>
               </Row>
-
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Dia Chi
+                    Address
                   </Label>
                 </Col>
                 <Col>
                   <Input type='text'   value={address} onChange={e => setAddress(e.target.value)} />
                 </Col>
               </Row>
-
               <Row>
                 <Col lg='2' sm='12'>
                   <Label className='form-label font-weight-bold' >
-                    Chung Minh Nhan Dan
+                  Identiy Card
                   </Label>
                 </Col>
                 <Col>
                   <Input type='text'   value={indentity} onChange={e => setIndentity(e.target.value)} />
                 </Col>
               </Row>
-
-
               <Row>
                 <Col lg='4' sm='12'>
                   <Button.Ripple type='submit' color='primary' block>
-                  Cap Nhat Thong Tin
+                  Update
                 </Button.Ripple>
                 </Col>
-               
               </Row>
-              
             </Form>
-            
           </Col>
         </Col>
       </Row>

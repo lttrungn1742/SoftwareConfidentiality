@@ -10,11 +10,12 @@ CORS(api)
 
 @api.route('/healthcheck')
 def healthcheck():
-    return 'I am ok'
+    return 'HelloWorld'
 
 @api.route('/login', methods=['POST'])
 @cross_origin()   
 def login():
+    logging.info(request)
     username, password = request.json['username'], request.json['password']
     userFound = db.login(username, password)
     if userFound != None:
