@@ -30,7 +30,10 @@ const Login = () => {
         'password': password
       }),
     })
-    .then((response) => response.json())
+    .then((response) => {
+      console.log(response)
+      return response.json()
+    })
     .then((data) => {
       if (data.isSuccess){
         dispatch(handleLogin(data))
