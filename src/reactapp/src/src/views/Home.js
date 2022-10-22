@@ -69,8 +69,8 @@ const Home = () => {
         })
         .catch((error) => {
           console.error('Error:', error);
-          // dispatch(handleLogout());
-          // window.location.href = '/'
+          dispatch(handleLogout());
+          window.location.href = '/'
         });
       
       

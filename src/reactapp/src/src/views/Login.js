@@ -37,7 +37,7 @@ const Login = () => {
     .then((data) => {
       if (data.isSuccess){
         dispatch(handleLogin(data))
-        // window.location.href = '/'
+        window.location.href = '/'
       }
     })
     .catch((error) => {
