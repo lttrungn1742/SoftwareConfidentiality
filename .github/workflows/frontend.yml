@@ -17,6 +17,8 @@ jobs:
         working-directory: 'src/reactapp/src'
     steps:
     - uses: actions/checkout@v3
+    - name: check diff
+      run: git diff ../
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -32,8 +34,6 @@ jobs:
       run: yarn build
     - name: Check source
       run: ls -alh build
-    - name: check diff
-      run: git diff ./src/reactapp/
     # - name: S3 sync
     #   run: aws s3 sync --delete build s3://lttrung-dast-bucket/public
     # - name: Clean cache
