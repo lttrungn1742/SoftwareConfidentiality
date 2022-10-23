@@ -42,8 +42,8 @@ def execute_query(query, val=()):
 def login(username, password):
   result = execute_query_fetchone(f"select id from students where id=%s and password=%s", (username, sha512(password.encode()).hexdigest()))
   
-  logging.info(f" The username is logged - {result}")
-  return None if result == None else result[1][0]
+  logging.info(f" The username is logged - {result[1]}")
+  return None if result[1] == None else result[1][0]
   
 def getSubjects():
   try:

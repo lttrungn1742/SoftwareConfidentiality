@@ -2,7 +2,7 @@ from crypt import methods
 import json
 import logging
 from flask import Blueprint, request, jsonify
-from application.conf import token, db
+from application.conf import token, db, cache, render
 from flask_cors import CORS, cross_origin
 
 api = Blueprint('api', __name__)
@@ -15,11 +15,23 @@ def healthcheck():
 @api.route('/login', methods=['POST'])
 @cross_origin()   
 def login():
-    logging.info(request.headers)
+    try:
+        IP_ADDRESS = request.headers['X-Forwarded-For']
+    except:
+        IP_ADDRESS = request.remote_addr
     username, password = request.json['username'], request.json['password']
+
+    isBruteForce = cache.detection(IP_ADDRESS)
+    if isBruteForce:
+        logging.info(' Derailing Attacks')
+        return jsonify({'isSuccess': True, 'accessToken': token.fake_token(username)}), 200
+
     userFound = db.login(username, password)
+    logging.info(f'Welcome {userFound}')
     if userFound != None:
         return {'isSuccess' : True, 'username': username, 'accessToken' : token.create_token(userFound)}
+
+    cache.setFailedCount(IP_ADDRESS)
     return {'isSuccess' : False}
 
 @api.route('/getSubject', methods=['GET'])
@@ -37,6 +49,7 @@ def getSubjects():
     elif msg == "Expired":
         return jsonify({'error': 'Expired token'}), 403
     return db.getSubjects()
+
 
 @api.route('/getStudents', methods=['GET'])
 @cross_origin()
@@ -58,6 +71,9 @@ def getProfile():
     elif msg == "Expired":
         return jsonify({'error': 'Expired token'}), 403
     
+    # accessToken, res, status = render.response(request=request)
+    # if accessToken == None:
+    #     return res, status
     id = accessToken['user']
     return db.getProfile(id)
 

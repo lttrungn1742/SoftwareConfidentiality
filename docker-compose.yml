@@ -17,8 +17,7 @@ services:
       - ./src/reactapp/conf:/conf:rw 
     command: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
     networks:
-        app:
-          ipv4_address: 10.10.10.20
+      app:
     ports:
       - 80:80
   stg:
@@ -31,7 +30,7 @@ services:
       - ./src/reactapp/conf:/conf:rw 
     command: "/usr/sbin/nginx -c /etc/nginx/nginx.conf"
     networks:
-        app:
+      app:
     ports:
       - 8888:80
   api:
@@ -40,14 +39,15 @@ services:
     volumes:
       - ./src/api/src/:/app:rw 
     networks:
-        app:
-          ipv4_address: 10.10.10.10
+      app:
+        ipv4_address: 10.10.10.10
     ports:
       - 8080:80
     env_file:
       - .env
     links:
       - db
+      - redis
     environment:
       - MYSQL_USER=root
   db:
@@ -56,7 +56,13 @@ services:
     env_file:
       - .env
     networks:
-        app:
-          ipv4_address: 10.10.10.5
+      app:
+        ipv4_address: 10.10.10.5
     ports:
       - 3306:3306    
+  redis:
+    image: redis
+    networks:
+      app:
+    container_name: redis
+      

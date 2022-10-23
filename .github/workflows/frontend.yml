@@ -32,17 +32,19 @@ jobs:
       run: yarn build
     - name: Check source
       run: ls -alh build
-    - name: S3 sync
-      run: aws s3 sync --delete build s3://lttrung-dast-bucket/public
-    - name: Clean cache
-      run: aws cloudfront  create-invalidation --distribution-id E21U7PULRELFOQ --paths "/*"
-    - name: Slack Notification
-      uses: rtCamp/action-slack-notify@v2
-      if: always()
-      env:
-        SLACK_CHANNEL: C04176JK2JU
-        SLACK_COLOR: ${{ job.status }}
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: 'Post Content :rocket:'
-        SLACK_TITLE: API Deployment
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    - name: check diff
+      run: git diff ./src/reactapp/
+    # - name: S3 sync
+    #   run: aws s3 sync --delete build s3://lttrung-dast-bucket/public
+    # - name: Clean cache
+    #   run: aws cloudfront  create-invalidation --distribution-id E21U7PULRELFOQ --paths "/*"
+    # - name: Slack Notification
+    #   uses: rtCamp/action-slack-notify@v2
+    #   if: always()
+    #   env:
+    #     SLACK_CHANNEL: C04176JK2JU
+    #     SLACK_COLOR: ${{ job.status }}
+    #     SLACK_ICON: https://github.com/rtCamp.png?size=48
+    #     SLACK_MESSAGE: 'Post Content :rocket:'
+    #     SLACK_TITLE: API Deployment
+    #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
