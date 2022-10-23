@@ -19,6 +19,7 @@ def login():
         IP_ADDRESS = request.headers['X-Forwarded-For']
     except:
         IP_ADDRESS = request.remote_addr
+        
     username, password = request.json['username'], request.json['password']
 
     isBruteForce = cache.detection(IP_ADDRESS)
@@ -37,60 +38,35 @@ def login():
 @api.route('/getSubject', methods=['GET'])
 @cross_origin()
 def getSubjects():
-    accessToken = request.headers['Authorization']
-    
+    accessToken, res, status = render.response(request=request)
     if accessToken == None:
-        return jsonify({'error': 'Authorization: <token>'}), 403
-    
-    msg, accessToken = token.verify_token(accessToken)
-
-    if msg == "Invalid":
-        return jsonify({'error': 'Invalid token'}), 403
-    elif msg == "Expired":
-        return jsonify({'error': 'Expired token'}), 403
+        return res, status
     return db.getSubjects()
 
 
 @api.route('/getStudents', methods=['GET'])
 @cross_origin()
 def getStudents():
+    accessToken, res, status = render.response(request=request)
+    if accessToken == None:
+        return res, status
     return db.getStudents()
 
 @api.route('/getProfile', methods=['GET'])
 @cross_origin()
-def getProfile():
-    accessToken = request.headers['Authorization']
-    
+def getProfile():    
+    accessToken, res, status = render.response(request=request)
     if accessToken == None:
-        return jsonify({'error': 'Authorization: <token>'}), 403
-    
-    msg, accessToken = token.verify_token(accessToken)
-
-    if msg == "Invalid":
-        return jsonify({'error': 'Invalid token'}), 403
-    elif msg == "Expired":
-        return jsonify({'error': 'Expired token'}), 403
-    
-    # accessToken, res, status = render.response(request=request)
-    # if accessToken == None:
-    #     return res, status
+        return res, status
     id = accessToken['user']
     return db.getProfile(id)
 
 @api.route('/updateProfile', methods=['POST'])
 @cross_origin()
 def updateProfile():
-    accessToken = request.headers['Authorization']
-    
+    accessToken, res, status = render.response(request=request)
     if accessToken == None:
-        return jsonify({'error': 'Authorization: <token>'}), 403
-    
-    msg, accessToken = token.verify_token(accessToken)
-
-    if msg == "Invalid":
-        return jsonify({'error': 'Invalid token'}), 403
-    elif msg == "Expired":
-        return jsonify({'error': 'Expired token'}), 403
+        return res, status
     
     id = accessToken['user']
 
@@ -104,17 +80,9 @@ def updateProfile():
 
 @api.route('/getAcademy', methods=['GET'])
 def getAcademy():
-    accessToken = request.headers['Authorization']
-    
+    accessToken, res, status = render.response(request=request)
     if accessToken == None:
-        return jsonify({'error': 'Authorization: <token>'}), 403
-    
-    msg, accessToken = token.verify_token(accessToken)
-
-    if msg == "Invalid":
-        return jsonify({'error': 'Invalid token'}), 403
-    elif msg == "Expired":
-        return jsonify({'error': 'Expired token'}), 403
+        return res, status
     
     id = accessToken['user']
 

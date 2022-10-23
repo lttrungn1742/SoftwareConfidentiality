@@ -1,7 +1,7 @@
 import logging
 import redis, os, datetime
 
-REDIS_POOL = redis.ConnectionPool(host='redis', port=6379, db=0)
+REDIS_POOL = redis.ConnectionPool(host=os.getenv('CACHE_HOST'), port=6379, db=0)
 
 limit_failed_count = int(os.getenv('LIMIT_FAILED_COUNT', 60))
 
@@ -33,3 +33,4 @@ def setFailedCount(IP_ADDRESS):
 
 def protection(IP_ADDRESS):
     setFailedCount(IP_ADDRESS)
+
