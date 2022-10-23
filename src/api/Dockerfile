@@ -18,6 +18,7 @@ ENV MYSQL_ROOT_PASSWORD=DASTadmin
 ENV MYSQL_USER=admin
 ENV DEBUG=False
 ENV LIMIT_FAILED_COUNT=60
+ENV CACHE_HOST=redis-001.ldhquy.0001.apse1.cache.amazonaws.com
 
 # Switch working environment
 WORKDIR /app
