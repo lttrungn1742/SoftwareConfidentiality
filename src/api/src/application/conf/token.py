@@ -6,7 +6,8 @@ secretKey = os.urandom(50).hex()
 
 def create_token(user):
     expire = datetime.now().timestamp() + 1800
-    return  jwt.encode({"user": user, "expire": expire}, secretKey, algorithm="HS256")
+    return  jwt.encode( {"user": user, "expire": expire}, 
+                        secretKey, algorithm="HS256")
 
 def verify_token(token):
     try:  

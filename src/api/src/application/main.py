@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, jsonify, request
 from application.blueprints.routes import api
+from application.blueprints.admin import admin
 from application.conf import token
 import re
 
@@ -8,6 +9,7 @@ app = Flask(__name__)
 app.config.from_object('application.conf.config.Config')
 
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(admin, url_prefix='/admin')
 
 @app.errorhandler(404)
 def not_found(error):

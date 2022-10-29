@@ -43,3 +43,9 @@ CREATE TABLE academy(
     FOREIGN KEY (idSubject) REFERENCES subjects(id)
 );
 
+CREATE TABLE users_admin(
+    id int NOT NULL AUTO_INCREMENT,
+    username text,
+    password VARCHAR(128),
+    PRIMARY KEY (id)
+)
