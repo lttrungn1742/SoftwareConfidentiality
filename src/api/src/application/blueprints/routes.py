@@ -1,5 +1,3 @@
-from crypt import methods
-from ctypes import sizeof
 import json
 import logging
 from flask import Blueprint, request, jsonify

@@ -49,3 +49,10 @@ CREATE TABLE users_admin(
     password VARCHAR(128),
     PRIMARY KEY (id)
 )
+
+CREATE TABLE black_list(
+    id int NOT NULL AUTO_INCREMENT,
+    IP_ADDRESS VARCHAR(16),
+    DATETIME date
+    PRIMARY KEY (id)
+)

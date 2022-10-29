@@ -13,18 +13,6 @@ const Routes = [
     component: lazy(() => import('../../views/Home'))
   },
   {
-    path: '/subjects',
-    component: lazy(() => import('../../views/Subjects'))
-  },
-  {
-    path: '/students',
-    component: lazy(() => import('../../views/Students'))
-  },
-  {
-    path: '/academy',
-    component: lazy(() => import('../../views/Academy'))
-  },
-  {
     path: '/login',
     component: lazy(() => import('../../views/Login')),
     layout: 'BlankLayout',
