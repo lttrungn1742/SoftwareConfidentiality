@@ -20,7 +20,7 @@ const Login = () => {
 
   const login = (e) => {
     e.preventDefault()  
-    fetch(`${endpoint}/admin/login`, {
+    fetch(`${endpoint}/api/admin`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
