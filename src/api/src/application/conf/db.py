@@ -43,6 +43,12 @@ def login(username, password):
   
   logging.info(f" The username is logged - {result[1]}")
   return None if result[1] == None else result[1][0]
+
+def login_admin(username, password):
+    result = execute_query_fetchone(f"select id from users_admin where username=%s and password=%s", (username, sha512(password.encode()).hexdigest()))
+  
+    logging.info(f" The username is logged - {result[1]}")
+    return None if result[1] == None else result[1][0]
   
 def getSubjects():
   try:
