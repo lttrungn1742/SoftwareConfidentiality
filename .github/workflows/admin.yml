@@ -1,4 +1,4 @@
-name: Frontend Cloudfront
+name: Admin Cloudfront
 on:
   push:
     branches: [ "master" ]
@@ -35,9 +35,9 @@ jobs:
     - name: Check source
       run: ls -alh build
     - name: S3 sync
-      run: aws s3 sync --delete build s3://lttrung-dast-bucket/public
+      run: aws s3 sync --delete build s3://lttrung-dast-bucket/admin
     - name: Clean cache
-      run: aws cloudfront  create-invalidation --distribution-id E21U7PULRELFOQ --paths "/*"
+      run: aws cloudfront  create-invalidation --distribution-id EYPN5W8HSSJBQ --paths "/*"
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       if: always()
