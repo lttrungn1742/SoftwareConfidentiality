@@ -1,5 +1,6 @@
 import logging
 import redis, os, datetime
+from application.conf import db
 
 REDIS_POOL = redis.ConnectionPool(host=os.getenv('CACHE_HOST'), port=6379, db=0)
 
@@ -30,6 +31,9 @@ def setFailedCount(IP_ADDRESS):
     failed_count += 1
     logging.info(f'source: {IP_ADDRESS}, count: {failed_count}, time: {datetime.datetime.now().timestamp() + 1800}')
     r.set(brute_key, failed_count, 1800)
+
+    if failed_count >= limit_failed_count:
+        db.add_black_list(IP_ADDRESS, datetime.datetime.now().strftime("%y/%m/%d"))
 
 def protection(IP_ADDRESS):
     setFailedCount(IP_ADDRESS)

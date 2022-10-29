@@ -38,7 +38,6 @@ def execute_query(query, val=()):
     except Exception as err:
         logging.info(err)
 
-
 def login(username, password):
   result = execute_query_fetchone(f"select id from students where id=%s and password=%s", (username, sha512(password.encode()).hexdigest()))
   
@@ -141,3 +140,11 @@ def updateProfile(id, name, address, indentity, numberPhone):
     except Exception as err:
         logging.info(err)
         return str(err)
+
+# def add_black_list(IP_ADDRESS, datetime):
+#     sql = """INSERT INTO black_list VALUES
+# (1,'admin','c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec');"""
+# cursor.execute(sql, ())
+
+# con.commit()
+# print(cursor.rowcount, "record inserted.")

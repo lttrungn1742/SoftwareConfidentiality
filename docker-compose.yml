@@ -7,32 +7,45 @@ networks:
         - subnet: 10.10.10.0/24
 
 services:
-  web:
+  # web:
+  #   build:
+  #     dockerfile: build/Dockerfile-local
+  #     context: src/reactapp
+  #   container_name: web
+  #   volumes:
+  #     - ./src/reactapp/src/src:/src/src:rw
+  #     - ./src/reactapp/conf:/conf:rw 
+  #   command: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+  #   networks:
+  #     app:
+  #   ports:
+  #     - 80:80
+  # stg:
+  #   build:
+  #     dockerfile: build/Dockerfile-stg
+  #     context: src/reactapp
+  #   container_name: stg
+  #   volumes:
+  #     - ./src/reactapp/src/src:/src/src:rw
+  #     - ./src/reactapp/conf:/conf:rw 
+  #   command: "/usr/sbin/nginx -c /etc/nginx/nginx.conf"
+  #   networks:
+  #     app:
+  #   ports:
+  #     - 8888:80
+  admin:
     build:
       dockerfile: build/Dockerfile-local
-      context: src/reactapp
+      context: src/admin
     container_name: web
     volumes:
-      - ./src/reactapp/src/src:/src/src:rw
-      - ./src/reactapp/conf:/conf:rw 
+      - ./src/admin/src/src:/src/src:rw
+      - ./src/admin/conf:/conf:rw 
     command: ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
     networks:
       app:
     ports:
       - 80:80
-  stg:
-    build:
-      dockerfile: build/Dockerfile-stg
-      context: src/reactapp
-    container_name: stg
-    volumes:
-      - ./src/reactapp/src/src:/src/src:rw
-      - ./src/reactapp/conf:/conf:rw 
-    command: "/usr/sbin/nginx -c /etc/nginx/nginx.conf"
-    networks:
-      app:
-    ports:
-      - 8888:80
   api:
     build: src/api
     container_name: api

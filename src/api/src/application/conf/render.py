@@ -1,3 +1,4 @@
+from ctypes import sizeof
 import logging
 from flask import jsonify
 from application.conf import token, cache

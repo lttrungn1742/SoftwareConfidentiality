@@ -43,3 +43,16 @@ CREATE TABLE academy(
     FOREIGN KEY (idSubject) REFERENCES subjects(id)
 );
 
+CREATE TABLE users_admin(
+    id int NOT NULL AUTO_INCREMENT,
+    username text,
+    password VARCHAR(128),
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE black_list(
+    id int NOT NULL AUTO_INCREMENT,
+    IP_ADDRESS VARCHAR(16),
+    DATETIME date
+    PRIMARY KEY (id)
+)

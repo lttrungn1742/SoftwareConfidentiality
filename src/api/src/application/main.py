@@ -26,19 +26,4 @@ def bad_request(error):
     logging.info(error)
     return jsonify({'error': 'Bad Request'}), 404
 
-# @app.before_request
-# def intercept():
-#     if re.match('^(%s)'%'|'.join(['/api/login', '/api/healthcheck'] ),request.path):
-#         pass
-#     elif '/api/' in request.path:
-#         try:
-#             accessToken = request.headers.get('Authorization')
-#             logging.info(accessToken)
-#             logging.info(type(accessToken))
-#             accessToken = token.verify_token(accessToken)
-#             if accessToken == None:
-#                 return jsonify({'error': 'Bad Request'}), 404
-#         except KeyError as err:
-#             logging.info(f"Interception: {err}" )
-#             return jsonify({'error': 'Authorization: <token>'}), 404
         

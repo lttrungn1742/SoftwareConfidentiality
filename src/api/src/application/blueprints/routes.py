@@ -1,4 +1,3 @@
-from crypt import methods
 import json
 import logging
 from flask import Blueprint, request, jsonify
@@ -15,6 +14,7 @@ def healthcheck():
 @api.route('/login', methods=['POST'])
 @cross_origin()   
 def login():
+    logging.info(request.json)
     try:
         IP_ADDRESS = request.headers['X-Forwarded-For']
     except:
