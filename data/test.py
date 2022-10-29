@@ -18,6 +18,14 @@
 # #     'authorization':response.json()['accessToken']
 # # }).json())
 
-from hashlib import sha512
+import datetime
 
-print(sha512("admin".encode()).hexdigest())
+now = datetime.datetime.now()
+
+yesterday = datetime.datetime.now() - datetime.timedelta(1)
+
+datetime.datetime.strftime(yesterday, "%y/%m/%d")
+
+print(yesterday)
+
+print(now)
