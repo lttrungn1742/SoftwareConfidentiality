@@ -847,7 +847,7 @@ const SecondPage = () => {
   return (
     <Card>
       <DataTable
-          title="Subjects"
+          title="Metrics"
           columns={columns}
           data={data}
           pagination
