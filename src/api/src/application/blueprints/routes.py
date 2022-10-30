@@ -91,9 +91,7 @@ def updateProfile():
     accessToken, res, status = render.response(request=request)
     if accessToken == None:
         return res, status
-    
     id = accessToken['user']
-
     name = request.json['name']
     address = request.json['address']
     indentity = request.json['indentity']

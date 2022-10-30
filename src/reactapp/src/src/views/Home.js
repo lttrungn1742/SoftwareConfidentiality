@@ -26,7 +26,7 @@ const Home = () => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': JSON.parse(localStorage.getItem('userData')).accessToken,
-        'Access-Control-Request-Headers': '*'
+        'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
         'name': name,

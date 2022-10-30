@@ -1,7 +1,7 @@
 name: Admin Cloudfront
 on:
-  push:
-    branches: [ "master" ]
+  # push:
+  #   branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
