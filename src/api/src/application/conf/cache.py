@@ -32,8 +32,6 @@ def setFailedCount(IP_ADDRESS):
     logging.info(f'source: {IP_ADDRESS}, count: {failed_count}, time: {datetime.datetime.now().timestamp() + 1800}')
     r.set(brute_key, failed_count, 1800)
 
-    if failed_count >= limit_failed_count:
-        db.add_black_list(IP_ADDRESS, datetime.datetime.now().strftime("%y/%m/%d"))
 
 def protection(IP_ADDRESS):
     setFailedCount(IP_ADDRESS)
