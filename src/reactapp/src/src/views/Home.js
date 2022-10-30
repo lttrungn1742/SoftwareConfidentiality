@@ -25,7 +25,8 @@ const Home = () => {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': JSON.parse(localStorage.getItem('userData')).accessToken
+        'Authorization': JSON.parse(localStorage.getItem('userData')).accessToken,
+        'Access-Control-Request-Headers': '*'
       },
       body: JSON.stringify({
         'name': name,
