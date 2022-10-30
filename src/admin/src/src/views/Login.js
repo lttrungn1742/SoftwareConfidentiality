@@ -23,7 +23,8 @@ const Login = () => {
     fetch(`${endpoint}/api/admin`, {
       method: 'POST', 
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*'
       },
       body: JSON.stringify({
         'username': username,
