@@ -37,7 +37,7 @@ def login():
 
 @api.route('/admin', methods=['POST'])
 @cross_origin()   
-def login():
+def admin_login():
     logging.info(request.json)
     try:
         IP_ADDRESS = request.headers['X-Forwarded-For']
