@@ -21,6 +21,8 @@ def forbidden(error):
 def bad_request(error):
     return jsonify({'error': 'Bad Request'}), 400
 
+# status code 500, raise 500
+
 @app.errorhandler(Exception)
 def bad_request(error):
     logging.info(error)

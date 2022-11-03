@@ -6,7 +6,12 @@ from flask import escape
 
 logging.basicConfig(level=logging.INFO, format=f'%(message)s')
 
-con = mysql.connector.connect(host=os.getenv('DB_HOST'),  user=os.getenv('MYSQL_USER'),password=os.getenv('MYSQL_ROOT_PASSWORD'),database='data' )
+con = mysql.connector.connect(host=os.getenv('DB_HOST'),  
+                                user=os.getenv('MYSQL_USER'),
+                                password=os.getenv('MYSQL_ROOT_PASSWORD'),
+                                database='data' 
+                            )
+
 cursor = con.cursor()
 
 sanitize_row = lambda row: (escape(element) for element in row)

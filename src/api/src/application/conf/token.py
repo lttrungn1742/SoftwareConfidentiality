@@ -4,6 +4,7 @@ from application.conf import cache
 
 secretKey = os.urandom(50).hex()
 
+
 def create_token(user):
     expire = datetime.now().timestamp() + 1800
     return  jwt.encode( {"user": user, "expire": expire}, 
@@ -25,5 +26,5 @@ def fake_token(user):
     """
         Derailing Attacks
     """
-    secretsFake = ['secrets', '1234567890','iloveyou','thankyou','basicauth']
+    secretsFake = ['secrets', '1234567890', 'iloveyou','thankyou','basicauth']
     return  jwt.encode({"user": user, "expire": expire}, random.choice(secretsFake), algorithm="HS256")
