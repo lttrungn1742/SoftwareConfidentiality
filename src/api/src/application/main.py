@@ -1,6 +1,7 @@
 import logging
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session, g
 from application.blueprints.routes import api
+from application.conf import notification
 
 app = Flask(__name__)
 app.config.from_object('application.conf.config.Config')
@@ -32,5 +33,6 @@ def bad_request(error):
     if 'HTTP_AUTHORIZATION' in str(error):
         return jsonify({'error': 'Authorization: <token>'}), 403
     logging.info(error)
+    notification.raise_exception(err=str(error), request=request)
     return jsonify({'error': 'Bad Request'}), 404
 

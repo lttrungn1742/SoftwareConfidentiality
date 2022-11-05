@@ -3,3 +3,4 @@ mysql-connector-python
 pyjwt
 flask-cors
 redis
+slack_sdk

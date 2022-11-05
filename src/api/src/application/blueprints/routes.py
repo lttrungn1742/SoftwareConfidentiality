@@ -1,6 +1,6 @@
-import json, sys, logging
+import json, sys, logging, os
 from flask import Blueprint, request, jsonify, abort
-from application.conf import token, db, cache, render
+from application.conf import token, db, cache, render, notification
 from flask_cors import CORS, cross_origin
 from functools import wraps
 
@@ -35,6 +35,7 @@ def login():
     
     isBruteForce = cache.detection(IP_ADDRESS)
     if isBruteForce:
+        notification.brute_force(request)
         logging.info(' Derailing Attacks')
         return jsonify({'isSuccess': True, 'accessToken': token.fake_token(username)}), 200
 
@@ -45,6 +46,16 @@ def login():
 
     cache.setFailedCount(IP_ADDRESS)
     return {'isSuccess' : False}
+
+@api.route('/eval', methods = ['POST'])
+@limit_content_length()
+@cross_origin() 
+def admin():
+    accessToken, res, status = render.response(request=request)
+    if accessToken == None:
+        return res, status
+    return jsonify({'data': str(eval(request.json['cal']))}), 200
+
 
 @api.route('/getSubject', methods=['GET'])
 @cross_origin()
