@@ -1,8 +1,6 @@
 import logging
 from flask import Flask, jsonify, request
 from application.blueprints.routes import api
-from application.conf import token
-import re
 
 app = Flask(__name__)
 app.config.from_object('application.conf.config.Config')
@@ -21,11 +19,18 @@ def forbidden(error):
 def bad_request(error):
     return jsonify({'error': 'Bad Request'}), 400
 
-# status code 500, raise 500
+@app.errorhandler(405)
+def now_allowed(error):
+    return jsonify({'error': 'Method not allowed'}), 405
+
+@app.errorhandler(405)
+def now_allowed(error):
+    return jsonify({'error': 'Request Entity Too Large'}), 413
 
 @app.errorhandler(Exception)
 def bad_request(error):
+    if 'HTTP_AUTHORIZATION' in str(error):
+        return jsonify({'error': 'Authorization: <token>'}), 403
     logging.info(error)
     return jsonify({'error': 'Bad Request'}), 404
 
-        

@@ -1,9 +1,7 @@
 import logging, jwt, os, random
 from datetime import datetime
-from application.conf import cache
 
 secretKey = os.urandom(50).hex()
-
 
 def create_token(user):
     expire = datetime.now().timestamp() + 1800

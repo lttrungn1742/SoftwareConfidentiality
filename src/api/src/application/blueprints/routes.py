@@ -1,8 +1,8 @@
-import json
-import logging
-from flask import Blueprint, request, jsonify
+import json, sys, logging
+from flask import Blueprint, request, jsonify, abort
 from application.conf import token, db, cache, render
 from flask_cors import CORS, cross_origin
+from functools import wraps
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -11,17 +11,28 @@ CORS(api)
 def healthcheck():
     return 'HelloWorld'
 
+def limit_content_length(max_length=3 * 1024 * 1024):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            if request.content_length > max_length:
+                abort(413)
+            return f(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
 @api.route('/login', methods=['POST'])
+@limit_content_length()
 @cross_origin()   
 def login():
-    logging.info(request.json)
     try:
         IP_ADDRESS = request.headers['X-Forwarded-For']
     except:
         IP_ADDRESS = request.remote_addr
         
     username, password = request.json['username'], request.json['password']
-
+    
     isBruteForce = cache.detection(IP_ADDRESS)
     if isBruteForce:
         logging.info(' Derailing Attacks')

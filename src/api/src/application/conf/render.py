@@ -1,10 +1,9 @@
-from ctypes import sizeof
+
 import logging
 from flask import jsonify
 from application.conf import token, cache
 
-def response(request, check_brute_force = True, check_rate_limit = True):
-    accessToken = request.headers['Authorization']
+def response(request, check_brute_force = True, check_rate_limit = True, check_access_control = True):
     try:
         IP_ADDRESS = request.headers['X-Forwarded-For']
     except:
@@ -19,21 +18,17 @@ def response(request, check_brute_force = True, check_rate_limit = True):
         isBruteForce = cache.detection(IP_ADDRESS)
         if isBruteForce:
             logging.info(' Derailing Attacks')
-            return None, jsonify({'error': 'bug'}), 500
+            return None, jsonify({'error': 'Raise exception'}), 500
     
-
-    res, status = None, None
-    if accessToken == None:
-        res = jsonify({'error': 'Authorization: <token>'})
-        status = 403
-    
-    msg, accessToken = token.verify_token(accessToken)
-    if msg == "Invalid":
-        res =  jsonify({'error': 'Invalid token'})
-        status = 403
-        cache.setFailedCount(IP_ADDRESS)
-    elif msg == "Expired":
-        res = jsonify({'error': 'Expired token'})
-        status = 403
-
-    return accessToken, res, status
+    if check_access_control:
+        accessToken = request.headers['Authorization']
+        if accessToken == None:
+            return None, jsonify({'error': 'Authorization: <token>'}), 403
+        
+        msg, accessToken = token.verify_token(accessToken)
+        if msg == "Invalid":
+            cache.setFailedCount(IP_ADDRESS)
+            return None, jsonify({'error': 'Invalid token'}), 403
+        elif msg == "Expired":
+            return None, jsonify({'error': 'Expired token'}), 403
+        return accessToken, None, None
