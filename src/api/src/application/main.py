@@ -20,6 +20,10 @@ def forbidden(error):
 def bad_request(error):
     return jsonify({'error': 'Bad Request'}), 400
 
+@app.errorhandler(413)
+def large_request(error):
+    return jsonify({'error': 'Request Entity Too Large'}), 413
+
 @app.errorhandler(405)
 def now_allowed(error):
     return jsonify({'error': 'Method not allowed'}), 405
@@ -27,6 +31,10 @@ def now_allowed(error):
 @app.errorhandler(405)
 def now_allowed(error):
     return jsonify({'error': 'Request Entity Too Large'}), 413
+
+@app.errorhandler(429)
+def too_many_requests():
+    return jsonify({'error': 'Too Many Requests'}), 429
 
 @app.errorhandler(Exception)
 def bad_request(error):

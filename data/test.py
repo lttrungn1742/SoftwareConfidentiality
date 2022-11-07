@@ -2,14 +2,14 @@ import requests, time
 
 s = requests.session()
 
-endpoint = 'http://localhost:8080/api/login'
-# endpoint = "https://api.trunglt.info/api/login"
+# endpoint = 'http://localhost:8080/api/login'
+endpoint = "https://api.trunglt.info/api/login"
 
-for _ in range(100):
-    response = s.post(endpoint, json={'username':'a','password':'a'},
-                headers={'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'})
+# for _ in range(100):
+#     response = s.post(endpoint, json={'username':'trung','password':'test'},
+#                 headers={'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'})
 
-    print(response.text)
+#     print(response.text)
     
 
 
